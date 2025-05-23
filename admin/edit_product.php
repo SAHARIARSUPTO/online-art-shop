@@ -1,6 +1,6 @@
 <?php
 session_start();
-require '../../db.php'; // update path if needed
+require '../db.php'; // update path if needed
 
 // Check if ID exists
 if (!isset($_GET['id'])) {

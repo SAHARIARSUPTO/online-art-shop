@@ -1,6 +1,6 @@
 <?php
-include '../auth.php';
-include '../config.php';
+include 'auth.php';
+include 'config.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['order_id'])) {
     $orderId = intval($_POST['order_id']);

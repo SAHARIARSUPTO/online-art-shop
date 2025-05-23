@@ -1,7 +1,7 @@
 <?php
 session_start();
-include '../auth.php';  // session and auth check
-include '../../db.php';  // PDO connection (adjust path if needed)
+include 'auth.php';  // session and auth check
+include '../db.php';  // PDO connection (adjust path if needed)
 
 // Check for new orders
 $stmt = $pdo->query("SELECT COUNT(*) as new_order_count FROM orders WHERE is_new = 1");
@@ -42,11 +42,14 @@ $productCount = $stmt->fetch()['product_count'] ?? 0;
   <title>Admin Dashboard</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
+  <header class="bg-green-600 text-white p-6 shadow-md sticky top-0 z-10">
+    <h1 class="text-3xl font-extrabold tracking-tight">Admin Dashboard</h1>
+  </header>
 <body class="bg-gray-100 min-h-screen font-sans">
 
   <div class="p-4 sm:p-6 md:p-8 max-w-7xl mx-auto">
 
-    <h1 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-6">🎯 Admin Dashboard</h1>
+  
 
     <?php if ($showOrderNotification): ?>
       <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-6 rounded-md max-w-3xl mx-auto shadow-sm">
@@ -70,26 +73,21 @@ $productCount = $stmt->fetch()['product_count'] ?? 0;
       </a>
 
       <!-- Testimonials -->
-      <div class="bg-white rounded-xl shadow-md p-5 hover:shadow-xl transition">
+       
+      <a href="testimonials.php" class="bg-white rounded-xl shadow-md p-5 hover:shadow-xl transition block">
         <div class="text-xl font-semibold flex items-center gap-2 mb-1">💬 Pending Testimonials</div>
         <div class="text-4xl font-bold text-yellow-500"><?= $pendingTestimonials ?></div>
-      </div>
+      </a>
 
       <!-- News -->
       <div class="bg-white rounded-xl shadow-md p-5 hover:shadow-xl transition">
-        <div class="text-xl font-semibold flex items-center gap-2 mb-1">📰 News Posts</div>
+        <div class="text-xl font-semibold flex items-center gap-2 mb-1"> News Posts</div>
         <div class="text-4xl font-bold text-blue-600"><?= $newsCount ?></div>
-      </div>
-
-      <!-- Artworks -->
-      <div class="bg-white rounded-xl shadow-md p-5 hover:shadow-xl transition">
-        <div class="text-xl font-semibold flex items-center gap-2 mb-1">🎨 Artworks</div>
-        <div class="text-4xl font-bold text-purple-600"><?= $artworksCount ?></div>
       </div>
 
       <!-- Products Management -->
       <a href="admin_products.php" class="bg-white rounded-xl shadow-md p-5 hover:shadow-xl transition block">
-        <div class="text-xl font-semibold flex items-center gap-2 mb-1">🖼️ Products</div>
+        <div class="text-xl font-semibold flex items-center gap-2 mb-1"> Products</div>
         <div class="text-4xl font-bold text-pink-600"><?= $productCount ?></div>
         <div class="mt-2 text-sm text-gray-600">Manage &amp; edit products</div>
       </a>
@@ -100,6 +98,10 @@ $productCount = $stmt->fetch()['product_count'] ?? 0;
       👋 Welcome back, Admin! Use the menu to manage your content.
     </div>
   </div>
-
+<div class="m-10 flex justify-center">
+  <a href="../../index.php" class="inline-block bg-green-600 text-white px-6 py-3 rounded-md hover:bg-green-700 transition font-semibold">
+    ← Back to Home
+  </a>
+</div>
 </body>
 </html>

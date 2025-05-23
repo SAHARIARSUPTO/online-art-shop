@@ -1,0 +1,4 @@
+fontFamily: {
+            sans: ['"Inter"', 'sans-serif'],
+            serif: ['"Playfair Display"', 'serif'], // A more artistic font
+          }
