@@ -51,15 +51,38 @@ $avg_rating = round($avg_stmt->fetchColumn(), 1);
 </head>
 <body class="bg-gray-50 font-sans text-gray-800">
 
-<header class="bg-white shadow sticky top-0 z-50">
+<header class="bg-primary shadow-md">
   <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-    <a href="index.php" class="text-2xl font-bold text-primary">🎨 Online Art Store</a>
-    <nav class="space-x-6 text-sm font-medium">
-      <a href="index.php" class="text-gray-700 hover:text-primary transition">Home</a>
-      <a href="shop.php" class="text-gray-700 hover:text-primary transition">Shop</a>
-      <a href="cart.php" class="inline-block bg-primary text-white px-4 py-2 rounded hover:bg-green-600">🛒 Cart</a>
+    <a href="index.php">
+      <h1 class="text-2xl font-bold text-white">Online Art Store</h1>
+    </a>
+
+    <!-- Hamburger Menu Button (Mobile Only) -->
+    <button id="menu-toggle" class="text-white md:hidden focus:outline-none text-3xl">
+      ☰
+    </button>
+
+    <!-- Navigation -->
+    <nav id="menu" class="hidden md:flex md:items-center md:space-x-6 absolute md:static bg-primary md:bg-transparent top-16 left-0 w-full md:w-auto flex-col md:flex-row text-center z-50 md:z-auto shadow-md md:shadow-none">
+      <a href="index.php" class="block py-2 text-white hover:underline">Home</a>
+      <a href="shop.php" class="block py-2 text-white hover:underline">Shop</a>
+      <div class="py-2">
+        <a href="cart.php" class="inline-block bg-white text-primary px-4 py-2 rounded hover:bg-gray-100 font-medium">
+          🛒 Cart
+        </a>
+      </div>
     </nav>
   </div>
+
+  <!-- JS Toggle -->
+  <script>
+    const toggleBtn = document.getElementById('menu-toggle');
+    const menu = document.getElementById('menu');
+
+    toggleBtn.addEventListener('click', () => {
+      menu.classList.toggle('hidden');
+    });
+  </script>
 </header>
 
 <main class="max-w-6xl mx-auto px-4 md:px-6 py-10 grid grid-cols-1 lg:grid-cols-2 gap-10">

@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   // Handle image upload
   if ($_FILES['image']['name']) {
     $imageName = uniqid() . '_' . basename($_FILES['image']['name']);
-    $target = '../../images/' . $imageName;
+    $target = '../images/' . $imageName;
     move_uploaded_file($_FILES['image']['tmp_name'], $target);
   } else {
     $imageName = $product['image']; // Keep old image
@@ -75,7 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <label class="block mb-2 font-medium">Product Image</label>
         <input type="file" name="image" class="w-full" />
         <p class="text-sm mt-2 text-gray-500">Leave blank to keep current image.</p>
-        <img src="../../images/<?= htmlspecialchars($product['image']) ?>" alt="Current image" class="mt-4 w-32 rounded shadow border" />
+        <img src="../images/<?= htmlspecialchars($product['image']) ?>" alt="Current image" class="mt-4 w-32 rounded shadow border" />
       </div>
 
       <div class="flex gap-4">

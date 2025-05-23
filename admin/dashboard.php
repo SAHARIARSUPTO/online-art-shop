@@ -80,10 +80,12 @@ $productCount = $stmt->fetch()['product_count'] ?? 0;
       </a>
 
       <!-- News -->
-      <div class="bg-white rounded-xl shadow-md p-5 hover:shadow-xl transition">
+     <a href="news_manage.php" class="">
+       <div class="bg-white rounded-xl shadow-md p-5 hover:shadow-xl transition">
         <div class="text-xl font-semibold flex items-center gap-2 mb-1"> News Posts</div>
         <div class="text-4xl font-bold text-blue-600"><?= $newsCount ?></div>
       </div>
+     </a>
 
       <!-- Products Management -->
       <a href="admin_products.php" class="bg-white rounded-xl shadow-md p-5 hover:shadow-xl transition block">

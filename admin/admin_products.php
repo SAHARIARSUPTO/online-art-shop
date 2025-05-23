@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_product'])) {
     $error = "Please upload a product image.";
   } else {
     $imageName = uniqid() . '_' . basename($_FILES['image']['name']);
-    $target = '../../images/' . $imageName;
+    $target = '../images/' . $imageName;
 
     if (move_uploaded_file($_FILES['image']['tmp_name'], $target)) {
       $insertStmt = $pdo->prepare("INSERT INTO products (name, description, price, image) VALUES (?, ?, ?, ?)");
@@ -123,7 +123,7 @@ $products = $stmt->fetchAll();
         <?php foreach ($products as $product): ?>
           <div class="card bg-white rounded-xl shadow-md p-5 transition-smooth flex flex-col">
             <img
-              src="../../images/<?= htmlspecialchars($product['image']) ?>"
+              src="../images/<?= htmlspecialchars($product['image']) ?>"
               alt="<?= htmlspecialchars($product['name']) ?>"
               class="w-full h-44 object-cover rounded-md mb-4"
               loading="lazy"

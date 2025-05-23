@@ -63,17 +63,39 @@ $products = $stmt->fetchAll();
 
 <!-- Header -->
 <header class="bg-primary shadow-md">
-  <div class="max-w-7xl mx-auto px-6 py-6 flex justify-between items-center">
+  <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
     <a href="index.php">
       <h1 class="text-2xl font-bold text-white">Online Art Store</h1>
     </a>
-    <nav class="space-x-4">
-      <a href="index.php" class="text-white hover:underline">Home</a>
-      <a href="shop.php" class="text-white hover:underline">Shop</a>
-      <a href="cart.php" class="bg-white text-primary px-4 py-2 rounded hover:bg-gray-100 font-medium">🛒 Cart</a>
+
+    <!-- Hamburger Menu Button (Mobile Only) -->
+    <button id="menu-toggle" class="text-white md:hidden focus:outline-none text-3xl">
+      ☰
+    </button>
+
+    <!-- Navigation -->
+    <nav id="menu" class="hidden md:flex md:items-center md:space-x-6 absolute md:static bg-primary md:bg-transparent top-16 left-0 w-full md:w-auto flex-col md:flex-row text-center z-50 md:z-auto shadow-md md:shadow-none">
+      <a href="index.php" class="block py-2 text-white hover:underline">Home</a>
+      <a href="shop.php" class="block py-2 text-white hover:underline">Shop</a>
+      <div class="py-2">
+        <a href="cart.php" class="inline-block bg-white text-primary px-4 py-2 rounded hover:bg-gray-100 font-medium">
+          🛒 Cart
+        </a>
+      </div>
     </nav>
   </div>
+
+  <!-- JS Toggle -->
+  <script>
+    const toggleBtn = document.getElementById('menu-toggle');
+    const menu = document.getElementById('menu');
+
+    toggleBtn.addEventListener('click', () => {
+      menu.classList.toggle('hidden');
+    });
+  </script>
 </header>
+
 
 <!-- Filter & Sort Bar -->
 <section class="max-w-7xl mx-auto px-6 pt-10">
@@ -88,16 +110,29 @@ $products = $stmt->fetchAll();
     </div>
 
     <!-- Filter -->
-    <div>
-      <h3 class="text-lg font-medium mb-2">Filter by Price:</h3>
-      <div class="flex gap-3">
-        <a href="?filter=cheap<?= $sort ? "&sort=$sort" : '' ?>" class="px-4 py-2 border rounded-md <?= $filter === 'cheap' ? 'bg-primary text-white' : 'bg-white' ?>">Under $50</a>
-        <a href="?filter=mid<?= $sort ? "&sort=$sort" : '' ?>" class="px-4 py-2 border rounded-md <?= $filter === 'mid' ? 'bg-primary text-white' : 'bg-white' ?>">$50 - $150</a>
-        <a href="?filter=expensive<?= $sort ? "&sort=$sort" : '' ?>" class="px-4 py-2 border rounded-md <?= $filter === 'expensive' ? 'bg-primary text-white' : 'bg-white' ?>">Over $150</a>
-        <a href="index.php" class="px-4 py-2 border rounded-md text-red-600 hover:bg-red-100">Reset</a>
-      </div>
-    </div>
+    <!-- Filter -->
+<div class="mb-6">
+  <h3 class="text-lg font-medium mb-2">Filter by Price:</h3>
+  <div class="flex flex-wrap gap-3">
+    <a href="?filter=cheap<?= $sort ? "&sort=$sort" : '' ?>"
+       class="px-4 py-2 border rounded-md <?= $filter === 'cheap' ? 'bg-primary text-white' : 'bg-white' ?>">
+      Under $50
+    </a>
+    <a href="?filter=mid<?= $sort ? "&sort=$sort" : '' ?>"
+       class="px-4 py-2 border rounded-md <?= $filter === 'mid' ? 'bg-primary text-white' : 'bg-white' ?>">
+      $50 - $150
+    </a>
+    <a href="?filter=expensive<?= $sort ? "&sort=$sort" : '' ?>"
+       class="px-4 py-2 border rounded-md <?= $filter === 'expensive' ? 'bg-primary text-white' : 'bg-white' ?>">
+      Over $150
+    </a>
+    <a href="index.php"
+       class="px-4 py-2 border rounded-md text-red-600 hover:bg-red-100">
+      Reset
+    </a>
   </div>
+</div>
+
 </section>
 
 <!-- Product Listings -->

@@ -77,18 +77,41 @@ if (isset($_SESSION['error_message'])) {
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans leading-relaxed">
 
-  <header class="bg-primary shadow-md">
-    <div class="max-w-7xl mx-auto px-6 py-6 flex justify-between items-center">
-      <a href="index.php">
-        <h1 class="text-2xl font-bold text-white">Online Art Store</h1>
-      </a>
-      <nav class="space-x-4">
-        <a href="index.php" class="text-white hover:underline">Home</a>
-        <a href="shop.php" class="text-white hover:underline">Shop</a>
-        <a href="cart.php" class="bg-white text-primary px-4 py-2 rounded hover:bg-gray-100 font-medium">🛒 Cart</a>
-      </nav>
-    </div>
-  </header>
+<header class="bg-primary shadow-md">
+  <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+    <a href="index.php">
+      <h1 class="text-2xl font-bold text-white">Online Art Store</h1>
+    </a>
+
+    <!-- Hamburger Menu Button (Mobile Only) -->
+    <button id="menu-toggle" class="text-white md:hidden focus:outline-none text-3xl">
+      ☰
+    </button>
+
+    <!-- Navigation -->
+    <nav id="menu" class="hidden md:flex md:items-center md:space-x-6 absolute md:static bg-primary md:bg-transparent top-16 left-0 w-full md:w-auto flex-col md:flex-row text-center z-50 md:z-auto shadow-md md:shadow-none">
+      <a href="index.php" class="block py-2 text-white hover:underline">Home</a>
+      <a href="shop.php" class="block py-2 text-white hover:underline">Shop</a>
+      <div class="py-2">
+        <a href="cart.php" class="inline-block bg-white text-primary px-4 py-2 rounded hover:bg-gray-100 font-medium">
+          🛒 Cart
+        </a>
+      </div>
+    </nav>
+  </div>
+
+  <!-- JS Toggle -->
+  <script>
+    const toggleBtn = document.getElementById('menu-toggle');
+    const menu = document.getElementById('menu');
+
+    toggleBtn.addEventListener('click', () => {
+      menu.classList.toggle('hidden');
+    });
+  </script>
+</header>
+
+
 <?php if (count($news_items) > 0): ?>
   <?php $latest_news = $news_items[0]; ?>
   <section class="bg-yellow-100 text-yellow-900 py-2 shadow-inner border-t border-b border-yellow-300">

@@ -65,16 +65,17 @@ $newsItems = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <head>
   <meta charset="UTF-8">
   <title>Manage News</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100 p-8 font-sans">
+<body class="bg-gray-100 p-4 md:p-8 font-sans">
   <div class="max-w-4xl mx-auto">
 
-    <h1 class="text-3xl font-bold text-gray-800 mb-6">📰 Manage News</h1>
+    <h1 class="text-2xl md:text-3xl font-bold text-gray-800 mb-6">📰 Manage News</h1>
 
     <!-- Form -->
-    <div class="bg-white shadow-md rounded-lg p-6 mb-10">
-      <h2 class="text-xl font-semibold mb-4"><?= $editMode ? '✏️ Edit News' : '➕ Add News' ?></h2>
+    <div class="bg-white shadow-md rounded-lg p-4 md:p-6 mb-8 md:mb-10">
+      <h2 class="text-lg md:text-xl font-semibold mb-4"><?= $editMode ? '✏️ Edit News' : '➕ Add News' ?></h2>
       <form method="POST">
         <?php if ($editMode): ?>
           <input type="hidden" name="id" value="<?= $editNews['id'] ?>">
@@ -82,22 +83,24 @@ $newsItems = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         <div class="mb-4">
           <label class="block mb-1 font-medium">Title</label>
-          <input type="text" name="title" required class="w-full p-2 border rounded" value="<?= $editMode ? htmlspecialchars($editNews['title']) : '' ?>">
+          <input type="text" name="title" required class="w-full p-2 border rounded text-sm md:text-base" value="<?= $editMode ? htmlspecialchars($editNews['title']) : '' ?>">
         </div>
         <div class="mb-4">
           <label class="block mb-1 font-medium">Content</label>
-          <textarea name="content" rows="4" required class="w-full p-2 border rounded"><?= $editMode ? htmlspecialchars($editNews['content']) : '' ?></textarea>
+          <textarea name="content" rows="4" required class="w-full p-2 border rounded text-sm md:text-base"><?= $editMode ? htmlspecialchars($editNews['content']) : '' ?></textarea>
         </div>
         <div class="mb-4 flex items-center space-x-2">
           <input type="checkbox" name="visible" id="visible" <?= $editMode && $editNews['visible'] ? 'checked' : '' ?>>
-          <label for="visible">Visible to users</label>
+          <label for="visible" class="text-sm md:text-base">Visible to users</label>
         </div>
-        <button type="submit" name="<?= $editMode ? 'update' : 'create' ?>" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
-          <?= $editMode ? 'Update' : 'Post' ?> News
-        </button>
-        <?php if ($editMode): ?>
-          <a href="news_manage.php" class="ml-4 text-sm text-gray-500 underline">Cancel edit</a>
-        <?php endif; ?>
+        <div class="flex flex-col sm:flex-row gap-2">
+          <button type="submit" name="<?= $editMode ? 'update' : 'create' ?>" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 text-sm md:text-base">
+            <?= $editMode ? 'Update' : 'Post' ?> News
+          </button>
+          <?php if ($editMode): ?>
+            <a href="news_manage.php" class="text-center text-sm text-gray-500 underline py-2">Cancel edit</a>
+          <?php endif; ?>
+        </div>
       </form>
     </div>
 
@@ -106,29 +109,29 @@ $newsItems = $stmt->fetchAll(PDO::FETCH_ASSOC);
       <table class="min-w-full divide-y divide-gray-200">
         <thead class="bg-gray-100">
           <tr>
-            <th class="px-4 py-3 text-left text-xs font-bold text-gray-500 uppercase">Title</th>
-            <th class="px-4 py-3 text-left text-xs font-bold text-gray-500 uppercase">Date</th>
-            <th class="px-4 py-3 text-left text-xs font-bold text-gray-500 uppercase">Status</th>
-            <th class="px-4 py-3 text-right text-xs font-bold text-gray-500 uppercase">Actions</th>
+            <th class="px-2 md:px-4 py-3 text-left text-xs font-bold text-gray-500 uppercase">Title</th>
+            <th class="px-2 md:px-4 py-3 text-left text-xs font-bold text-gray-500 uppercase hidden sm:table-cell">Date</th>
+            <th class="px-2 md:px-4 py-3 text-left text-xs font-bold text-gray-500 uppercase hidden sm:table-cell">Status</th>
+            <th class="px-2 md:px-4 py-3 text-right text-xs font-bold text-gray-500 uppercase">Actions</th>
           </tr>
         </thead>
         <tbody class="divide-y divide-gray-200">
           <?php foreach ($newsItems as $news): ?>
             <tr>
-              <td class="px-4 py-4"><?= htmlspecialchars($news['title']) ?></td>
-              <td class="px-4 py-4"><?= date('M d, Y', strtotime($news['created_at'])) ?></td>
-              <td class="px-4 py-4">
+              <td class="px-2 md:px-4 py-4 text-sm md:text-base"><?= htmlspecialchars($news['title']) ?></td>
+              <td class="px-2 md:px-4 py-4 text-sm hidden sm:table-cell"><?= date('M d, Y', strtotime($news['created_at'])) ?></td>
+              <td class="px-2 md:px-4 py-4 text-sm hidden sm:table-cell">
                 <?= $news['visible'] ? '<span class="text-green-600 font-semibold">Visible</span>' : '<span class="text-red-500 font-semibold">Hidden</span>' ?>
               </td>
-              <td class="px-4 py-4 text-right space-x-2">
-                <a href="?edit=<?= $news['id'] ?>" class="text-blue-600 hover:underline">Edit</a>
-                <a href="?delete=<?= $news['id'] ?>" class="text-red-600 hover:underline" onclick="return confirm('Delete this news post?')">Delete</a>
-                <a href="?toggle=<?= $news['id'] ?>" class="text-gray-600 hover:underline"><?= $news['visible'] ? 'Hide' : 'Show' ?></a>
+              <td class="px-2 md:px-4 py-4 text-right space-x-1 md:space-x-2">
+                <a href="?edit=<?= $news['id'] ?>" class="text-blue-600 hover:underline text-xs md:text-sm">Edit</a>
+                <a href="?delete=<?= $news['id'] ?>" class="text-red-600 hover:underline text-xs md:text-sm" onclick="return confirm('Delete this news post?')">Delete</a>
+                <a href="?toggle=<?= $news['id'] ?>" class="text-gray-600 hover:underline text-xs md:text-sm"><?= $news['visible'] ? 'Hide' : 'Show' ?></a>
               </td>
             </tr>
           <?php endforeach; ?>
           <?php if (count($newsItems) === 0): ?>
-            <tr><td colspan="4" class="text-center py-4 text-gray-500">No news posted yet.</td></tr>
+            <tr><td colspan="4" class="text-center py-4 text-gray-500 text-sm md:text-base">No news posted yet.</td></tr>
           <?php endif; ?>
         </tbody>
       </table>

@@ -19,30 +19,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Login</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @media (max-width: 640px) {
+            .login-container {
+                margin-top: 2rem;
+                margin-bottom: 2rem;
+                width: 90%;
+            }
+        }
+    </style>
 </head>
-<body class="bg-gray-100 min-h-screen flex items-center justify-center">
-    <div class="bg-white shadow-lg rounded-xl p-8 w-full max-w-sm">
-        <h2 class="text-2xl font-bold mb-6 text-center text-gray-800">Admin Login</h2>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+    <div class="login-container bg-white shadow-lg rounded-xl w-full max-w-md p-6 sm:p-8">
+        <h2 class="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-6">Admin Login</h2>
 
         <?php if (!empty($error)): ?>
-            <div class="bg-red-100 text-red-700 px-4 py-2 rounded mb-4 text-sm"><?= $error ?></div>
+            <div class="bg-red-100 text-red-700 px-4 py-3 rounded mb-4 text-sm"><?= $error ?></div>
         <?php endif; ?>
 
-        <form method="POST" class="space-y-5">
+        <form method="POST" class="space-y-4 sm:space-y-6">
             <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Username</label>
+                <label class="block text-sm sm:text-base font-medium text-gray-700 mb-1">Username</label>
                 <input type="text" name="username" required
-                    class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    class="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500">
             </div>
 
             <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                <label class="block text-sm sm:text-base font-medium text-gray-700 mb-1">Password</label>
                 <div class="relative">
                     <input type="password" name="password" id="passwordField" required
-                        class="w-full border border-gray-300 rounded-lg px-4 py-2 pr-10 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <button type="button" onclick="togglePassword()" class="absolute inset-y-0 right-2 flex items-center text-gray-500">
+                        class="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm sm:text-base pr-10 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <button type="button" onclick="togglePassword()" class="absolute inset-y-0 right-3 flex items-center text-gray-500">
                         <!-- eye icon -->
                         <svg id="showIcon" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -57,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
 
             <button type="submit"
-                class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2 rounded-lg transition">
+                class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 rounded-lg text-sm sm:text-base transition">
                 Login
             </button>
         </form>

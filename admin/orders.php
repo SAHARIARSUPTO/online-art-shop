@@ -44,7 +44,7 @@ foreach ($itemsRaw as $item) {
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>All Orders - Admin Panel</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -59,19 +59,48 @@ foreach ($itemsRaw as $item) {
       },
     };
   </script>
+  <style>
+    @media (max-width: 768px) {
+      .order-row td {
+        display: block;
+        width: 100%;
+        padding: 0.5rem;
+      }
+      .order-row td:before {
+        content: attr(data-label);
+        font-weight: bold;
+        display: inline-block;
+        width: 120px;
+      }
+      .order-row {
+        display: block;
+        margin-bottom: 1rem;
+        border: 1px solid #e5e7eb;
+        border-radius: 0.5rem;
+        padding: 1rem;
+      }
+      .order-actions {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      .order-actions button {
+        width: 100%;
+      }
+    }
+  </style>
 </head>
 
-<body class="bg-secondary min-h-screen  font-sans text-gray-800">
-  <header class="bg-green-600 text-white p-6 shadow-md sticky top-0 z-10">
-    <h1 class="text-3xl font-extrabold tracking-tight">Order Product Management Dashboard</h1>
+<body class="bg-secondary min-h-screen font-sans text-gray-800">
+  <header class="bg-green-600 text-white p-4 md:p-6 shadow-md sticky top-0 z-10">
+    <h1 class="text-xl md:text-3xl font-extrabold tracking-tight">Order Product Management Dashboard</h1>
   </header>
 
-  <main>
-    <h1 class="text-2xl font-semibold mb-4 mt-5 text-primary">🧾 All Orders</h1>
+  <main class="p-4">
+    <h1 class="text-xl md:text-2xl font-semibold mb-4 mt-2 text-primary">🧾 All Orders</h1>
 
     <div class="overflow-x-auto">
-      <table class="min-w-full bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
-        <thead class="bg-primary/10 text-primary uppercase text-sm tracking-wider">
+      <table class="w-full bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
+        <thead class="bg-primary/10 text-primary uppercase text-sm tracking-wider hidden md:table-header-group">
           <tr>
             <th class="text-left py-3 px-4">ID</th>
             <th class="text-left py-3 px-4">Customer Name</th>
@@ -85,36 +114,36 @@ foreach ($itemsRaw as $item) {
         </thead>
         <tbody>
           <?php foreach ($orders as $order): ?>
-          <tr class="border-t hover:bg-primary/5 transition-colors duration-200">
+          <tr class="border-t hover:bg-primary/5 transition-colors duration-200 md:table-row flex flex-col md:table-row">
             <form method="POST" class="contents">
               <input type="hidden" name="order_id" value="<?= $order['id'] ?>">
-              <td class="py-2 px-4"><?= $order['id'] ?></td>
-              <td class="py-2 px-4">
+              <td data-label="ID" class="order-row py-2 px-4 md:table-cell"><?= $order['id'] ?></td>
+              <td data-label="Customer Name" class="order-row py-2 px-4 md:table-cell">
                 <input type="text" name="customer_name" value="<?= htmlspecialchars($order['customer_name']) ?>" class="border border-gray-300 px-2 py-1 rounded w-full">
               </td>
-              <td class="py-2 px-4">
+              <td data-label="Email" class="order-row py-2 px-4 md:table-cell">
                 <input type="email" name="email" value="<?= htmlspecialchars($order['email']) ?>" class="border border-gray-300 px-2 py-1 rounded w-full">
               </td>
-              <td class="py-2 px-4">
+              <td data-label="Phone" class="order-row py-2 px-4 md:table-cell">
                 <input type="text" name="phone" value="<?= htmlspecialchars($order['phone']) ?>" class="border border-gray-300 px-2 py-1 rounded w-full">
               </td>
-              <td class="py-2 px-4">
+              <td data-label="Address" class="order-row py-2 px-4 md:table-cell">
                 <input type="text" name="address" value="<?= htmlspecialchars($order['address']) ?>" class="border border-gray-300 px-2 py-1 rounded w-full">
               </td>
-              <td class="py-2 px-4">
-                <input type="number" step="0.01" name="total" value="<?= number_format($order['total'], 2) ?>" class="border border-gray-300 px-2 py-1 rounded w-24">
+              <td data-label="Total" class="order-row py-2 px-4 md:table-cell">
+                <input type="number" step="0.01" name="total" value="<?= number_format($order['total'], 2) ?>" class="border border-gray-300 px-2 py-1 rounded md:w-24 w-full">
               </td>
-              <td class="py-2 px-4">
+              <td data-label="Status" class="order-row py-2 px-4 md:table-cell">
                 <select name="is_approved" class="border border-gray-300 rounded px-2 py-1 w-full">
                   <option value="0" <?= $order['is_approved'] == 0 ? 'selected' : '' ?>>Pending</option>
                   <option value="1" <?= $order['is_approved'] == 1 ? 'selected' : '' ?>>Approved</option>
                 </select>
               </td>
-              <td class="py-2 px-4 flex gap-2">
-                <button type="submit" name="update_order" class="bg-primary text-white px-4 py-2 rounded-xl hover:bg-green-700 transition-all shadow">
+              <td class="order-row py-2 px-4 flex gap-2 order-actions">
+                <button type="submit" name="update_order" class="bg-primary text-white px-4 py-2 rounded-xl hover:bg-green-700 transition-all shadow md:w-auto w-full">
                   Update
                 </button>
-                <button type="submit" name="delete_order" onclick="return confirm('Delete this order?')" class="bg-red-500 text-white px-4 py-2 rounded-xl hover:bg-red-600 transition-all shadow">
+                <button type="submit" name="delete_order" onclick="return confirm('Delete this order?')" class="bg-red-500 text-white px-4 py-2 rounded-xl hover:bg-red-600 transition-all shadow md:w-auto w-full">
                   Delete
                 </button>
               </td>
@@ -127,9 +156,9 @@ foreach ($itemsRaw as $item) {
               <div class="mb-1 font-semibold">📦 Products in Order:</div>
               <ul class="list-disc pl-6 space-y-1 text-gray-600">
                 <?php foreach ($orderItems[$order['id']] as $item): ?>
-                  <li>
+                  <li class="break-words">
                     <?= htmlspecialchars($item['product_name']) ?>
-                    — Quantity: <?= $item['quantity'] ?>
+                    — Qty: <?= $item['quantity'] ?>
                     — Price: ৳<?= number_format($item['price'], 2) ?>
                   </li>
                 <?php endforeach; ?>
@@ -148,10 +177,10 @@ foreach ($itemsRaw as $item) {
       </table>
     </div>
   </main>
-  <div class="m-10 flex justify-center">
-  <a href="dashboard.php" class="inline-block bg-green-600 text-white px-6 py-3 rounded-md hover:bg-green-700 transition font-semibold">
-    ← Back to Dashboard
-  </a>
-</div>
+  <div class="m-4 md:m-10 flex justify-center">
+    <a href="dashboard.php" class="inline-block bg-green-600 text-white px-6 py-3 rounded-md hover:bg-green-700 transition font-semibold">
+      ← Back to Dashboard
+    </a>
+  </div>
 </body>
 </html>
